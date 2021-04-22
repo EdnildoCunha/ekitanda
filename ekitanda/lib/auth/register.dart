@@ -43,7 +43,7 @@ class _NewRegister extends State<Register> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     controller: inputFirstName,
                     decoration: InputDecoration(
@@ -66,7 +66,7 @@ class _NewRegister extends State<Register> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     controller: inputLastName,
                     decoration: InputDecoration(
@@ -89,7 +89,7 @@ class _NewRegister extends State<Register> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     controller: inputEmail,
                     decoration: InputDecoration(
@@ -114,7 +114,7 @@ class _NewRegister extends State<Register> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     style: TextStyle(color: Colors.green),
                     controller: inputPassword,
@@ -151,7 +151,7 @@ class _NewRegister extends State<Register> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(8.0),
                   child: TextFormField(
                     style: TextStyle(color: Colors.green),
                     controller: inputConfirmPassword,
