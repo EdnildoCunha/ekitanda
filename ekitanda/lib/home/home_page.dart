@@ -9,15 +9,21 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/logo_ekitanda.png'),
+            Container(
+              width: 220,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset('assets/logo_ekitanda.png'),
+              ),
+            ),
             Container(
               decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.all(
                     Radius.circular(40.0),
                   )),
-              width: 200.0,
-              height: 35.0,
+              width: 220.0,
+              height: 45.0,
               margin: EdgeInsets.all(10.0),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -40,8 +46,8 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.all(
                     Radius.circular(40.0),
                   )),
-              width: 200.0,
-              height: 35.0,
+              width: 220.0,
+              height: 45.0,
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: TextButton(

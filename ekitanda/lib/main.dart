@@ -1,3 +1,6 @@
+import 'package:ekitanda/home/home_page_produtos.dart';
+import 'package:ekitanda/home/view_cart.dart';
+import 'package:ekitanda/widget/single_product_view.dart';
 import 'package:flutter/material.dart';
 import 'package:ekitanda/home/home_page.dart';
 import 'package:ekitanda/auth/login.dart';
@@ -17,6 +20,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/login': (context) => Login(),
         '/register': (context) => Register(),
+        '/produtos': (context) => HomePageProdutos(),
+        '/single_product': (context) => SingleProduct(),
+        '/cart': (context) => CartPage(),
       },
     );
   }
