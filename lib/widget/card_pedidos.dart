@@ -11,7 +11,7 @@ class CardPedidos extends StatelessWidget {
 
   CardPedidos({@required this.pedido, @required this.usuario});
 
-  void CancelarPedido(int id, token) async {
+  Future<void> cancelarPedido(int id, token) async {
     try {
       var response = await Dio().post(
           'https://restful-ecommerce-ufma.herokuapp.com/api/v1/orders/$id/cancel',
@@ -22,7 +22,7 @@ class CardPedidos extends StatelessWidget {
     }
   }
 
-  void PagarPedido(int id, token) async {
+  Future<void> pagarPedido(int id, token) async {
     try {
       var response = await Dio().post(
           'https://restful-ecommerce-ufma.herokuapp.com/api/v1/orders/$id/pay',
@@ -82,7 +82,7 @@ class CardPedidos extends StatelessWidget {
                   fontSize: 15, fontWeight: FontWeight.bold, color: Colors.red),
             ),
             onPressed: () async {
-              await CancelarPedido(pedido['id'], usuario.token);
+              await cancelarPedido(pedido['id'], usuario.token);
               if (successCancel) {
                 Navigator.pushNamed(context, '/meus_pedidos',
                     arguments: usuario);
@@ -101,7 +101,7 @@ class CardPedidos extends StatelessWidget {
                   color: Colors.green),
             ),
             onPressed: () async {
-              await PagarPedido(pedido['id'], usuario.token);
+              await pagarPedido(pedido['id'], usuario.token);
               if (successPay) {
                 Navigator.pushNamed(context, '/meus_pedidos',
                     arguments: usuario);

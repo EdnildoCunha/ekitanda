@@ -1,6 +1,8 @@
+import 'package:ekitanda/home/add_produto.dart';
 import 'package:ekitanda/home/home_page_produtos.dart';
 import 'package:ekitanda/home/view_cart.dart';
 import 'package:ekitanda/home/view_pedidos.dart';
+import 'package:ekitanda/home/view_vendas.dart';
 import 'package:ekitanda/widget/single_product_view.dart';
 import 'package:flutter/material.dart';
 import 'package:ekitanda/home/home_page.dart';
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
         '/single_product': (context) => SingleProduct(),
         '/cart': (context) => CartPage(),
         '/meus_pedidos': (context) => MeusPedidos(),
+        '/minhas_vendas': (context) => MinhasVendas(),
+        '/add_produto': (context) => AdicionarProduto(),
       },
     );
   }

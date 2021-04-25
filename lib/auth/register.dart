@@ -1,3 +1,4 @@
+import 'package:ekitanda/model/usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -18,13 +19,32 @@ class _NewRegister extends State<Register> {
 
   final _formkey = GlobalKey<FormState>();
 
-  Future<Response> postRegister(String firstName, lastName, password, email, passwordConfirmation) async {
+  bool sucessRegister = false;
+  Usuario usuario;
+
+  Future<void> postRegister(
+      String firstName, lastName, password, email, passwordConfirmation) async {
     try {
-      var response = await await Dio().post(
-        'https://restful-ecommerce-ufma.herokuapp.com/register',
-        data: {'firstName': firstName, 'lastName': lastName,'email': email, 'password': password, 'passwordConfirmation': passwordConfirmation }
-        );
-      return(response);
+      var response = await Dio()
+          .post('https://restful-ecommerce-ufma.herokuapp.com/register', data: {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'password': password,
+        'passwordConfirmation': passwordConfirmation
+      });
+      if (response.data['success']) {
+        sucessRegister = true;
+        usuario = Usuario(
+            id: response.data['data']['id'],
+            firstName: response.data['data']['firstName'],
+            lastName: response.data['data']['lastName'],
+            email: response.data['data']['email'],
+            isAdmin: response.data['data']['isAdmin'],
+            createdAt: response.data['data']['createdAt'],
+            updatedAt: response.data['data']['updatedAt'],
+            token: response.data['data']['token']);
+      }
     } catch (e) {
       print(e);
     }
@@ -50,13 +70,14 @@ class _NewRegister extends State<Register> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children:[
+          children: [
             Form(
               key: _formkey,
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 20.0, bottom: 8.0, left: 8.0, right: 8.0),
+                    padding: EdgeInsets.only(
+                        top: 20.0, bottom: 8.0, left: 8.0, right: 8.0),
                     child: TextFormField(
                       controller: inputFirstName,
                       decoration: InputDecoration(
@@ -221,10 +242,18 @@ class _NewRegister extends State<Register> {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formkey.currentState.validate()) {
-                      Future<Response> register = postRegister(inputFirstName.text, inputLastName.text, inputPassword.text, inputEmail.text, inputConfirmPassword.text);
-                      Navigator.pushNamed(context, '/produtos');
+                      await postRegister(
+                          inputFirstName.text,
+                          inputLastName.text,
+                          inputPassword.text,
+                          inputEmail.text,
+                          inputConfirmPassword.text);
+                      if (sucessRegister) {
+                        Navigator.pushNamed(context, '/produtos',
+                            arguments: usuario);
+                      }
                     }
                   },
                 ),

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ekitanda/model/usuario.dart';
 import 'package:ekitanda/widget/card_cart.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,12 @@ class _NewCartPage extends State<CartPage> {
     }
   }
 
-  Future<void> _showMyDialog(String title, String content) async {
+  @override
+  Widget build(BuildContext context) {
+    final Usuario usuario = ModalRoute.of(context).settings.arguments as Usuario;
+    final String token = usuario.token;
+
+    Future<void> _showMyDialog(String title, String content) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -44,7 +50,7 @@ class _NewCartPage extends State<CartPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
               },
             ),
           ],
@@ -52,10 +58,6 @@ class _NewCartPage extends State<CartPage> {
       },
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    final String token = ModalRoute.of(context).settings.arguments as String;
 
     Future<List> getProdutosCart(String token) async {
       List produtos = [];

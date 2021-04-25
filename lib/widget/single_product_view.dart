@@ -1,5 +1,4 @@
 import 'package:ekitanda/model/produto.dart';
-import 'package:ekitanda/model/usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -12,11 +11,11 @@ class _SingleProductPage extends State<SingleProduct> {
   String dropdownValue = '1';
   bool success;
 
-  void addToCart(int id_produto, int qtd_produto, String token) async {
+  Future<void> addToCart(int idProduto, int qtdProduto, String token) async {
     try {
       var response = await Dio().post(
           'https://restful-ecommerce-ufma.herokuapp.com/api/v1/cart/add',
-          data: {'productId': id_produto, 'qty': qtd_produto},
+          data: {'productId': idProduto, 'qty': qtdProduto},
           options: Options(headers: {"Authorization": 'Bearer $token'}));
 
       success = response.data['success'];
@@ -66,8 +65,7 @@ class _SingleProductPage extends State<SingleProduct> {
                   style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/meus_pedidos',
-                      arguments: dados[1]);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -93,8 +91,7 @@ class _SingleProductPage extends State<SingleProduct> {
             IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
-                Navigator.pushNamed(context, '/cart',
-                    arguments: dados[1].token);
+                Navigator.pushNamed(context, '/cart', arguments: dados[1]);
               },
             ),
           ],

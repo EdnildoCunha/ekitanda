@@ -9,17 +9,17 @@ class Login extends StatefulWidget {
 
 class _NewLogin extends State<Login> {
   bool _showPassword = false;
-  
+
   final inputEmail = TextEditingController();
   final inputPassword = TextEditingController();
   final _keyform = GlobalKey<FormState>();
   Map<String, dynamic> login;
-  
-  void postLogin(String email, String password) async {
+
+  Future<void> postLogin(String email, String password) async {
     try {
       var response = await Dio().post(
-        'https://restful-ecommerce-ufma.herokuapp.com/login', data: {'email': email, 'password': password}
-        );
+          'https://restful-ecommerce-ufma.herokuapp.com/login',
+          data: {'email': email, 'password': password});
       login = response.data;
     } catch (e) {
       print(e);
@@ -140,22 +140,17 @@ class _NewLogin extends State<Login> {
                   onPressed: () async {
                     if (_keyform.currentState.validate()) {
                       await postLogin(inputEmail.text, inputPassword.text);
-                      if (login['success'] == true){
-                        Navigator.pushNamed(
-                        context,
-                        '/produtos',
-                        arguments: 
-                          Usuario(
-                            id: login['data']['id'],
-                            firstName: login['data']['firstName'],
-                            lastName: login['data']['lastName'],
-                            email: login['data']['email'],
-                            isAdmin: login['data']['isAdmin'],
-                            createdAt: login['data']['createdAt'],
-                            updatedAt: login['data']['updatedAt'],
-                            token: login['data']['token']
-                          )
-                        );
+                      if (login['success'] == true) {
+                        Navigator.pushNamed(context, '/produtos',
+                            arguments: Usuario(
+                                id: login['data']['id'],
+                                firstName: login['data']['firstName'],
+                                lastName: login['data']['lastName'],
+                                email: login['data']['email'],
+                                isAdmin: login['data']['isAdmin'],
+                                createdAt: login['data']['createdAt'],
+                                updatedAt: login['data']['updatedAt'],
+                                token: login['data']['token']));
                       }
                     }
                   },
