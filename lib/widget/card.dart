@@ -21,16 +21,20 @@ class CardProduto extends StatelessWidget {
       }
     }
 
-    List<Widget> childrenRow = [
-      Text(
-        "R\$ ${produto.price},00 kg",
-        style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+    List<Widget> childrenRowTop = [Container()];
+    List<Widget> childrenRowBottom = [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          "R\$ ${produto.price},00 kg",
+          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+        ),
       ),
       SizedBox(width: 20),
     ];
 
     if (usuario.isAdmin == true) {
-      childrenRow.add(
+      childrenRowTop.add(
         Padding(
           padding: const EdgeInsets.all(6.0),
           child: TextButton(
@@ -48,7 +52,7 @@ class CardProduto extends StatelessWidget {
         ),
       );
     } else {
-      childrenRow.add(
+      childrenRowBottom.add(
         Padding(
           padding: const EdgeInsets.all(6.0),
           child: TextButton(
@@ -70,26 +74,31 @@ class CardProduto extends StatelessWidget {
         shadowColor: Colors.green,
         elevation: 2.0,
         color: Colors.green[50],
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          ListTile(
-            //leading: Image.network(produto.imageUrl),
-            title: Text(
-              produto.title,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, 
+          children: [
+            Row(
+              children: childrenRowTop,
             ),
-            subtitle: Text(
-              produto.description,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+            ListTile(
+              leading: Image.network(produto.imageUrl),
+              title: Text(
+                produto.title,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+              subtitle: Text(
+                produto.description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: childrenRow,
-          ),
-        ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: childrenRowBottom,
+            ),
+          ]
+        ),
       ),
     );
   }

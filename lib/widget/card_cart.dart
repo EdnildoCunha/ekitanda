@@ -8,6 +8,9 @@ class CardProdutoCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print(produto);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -16,7 +19,7 @@ class CardProdutoCart extends StatelessWidget {
         color: Colors.green[50],
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           ListTile(
-            //leading: Image.network(produto['imageUrl']),
+            leading: Image.network('${produto['image']}'),
             title: Text(
               produto['title'],
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
