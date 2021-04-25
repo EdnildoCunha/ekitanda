@@ -30,34 +30,64 @@ class _NewCartPage extends State<CartPage> {
     final String token = usuario.token;
 
     Future<void> _showMyDialog(String title, String content) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('$title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('$content'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'OK',
-                style: TextStyle(fontSize: 20),
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('$title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('$content'),
+                ],
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
-              },
             ),
-          ],
-        );
-      },
-    );
-  }
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'OK',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _showMyDialogFail(String title, String content) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('$title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('$content'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'OK',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     Future<List> getProdutosCart(String token) async {
       List produtos = [];
@@ -158,14 +188,19 @@ class _NewCartPage extends State<CartPage> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            await finalizarCompra(token);
-            if (success) {
-              print('sucesso');
+            if (total > 0){
+              await finalizarCompra(token);
+            }
+            if (total <= 0){
+              return _showMyDialogFail(
+                  'O carrinho não possui itens!', 'Adicione itens e tente novamente!');
+            }
+            if (success == true) {
               return _showMyDialog('Compra finalizada',
                   'Acesse o menu de compras para finalizar o pagamento');
-            } else {
-              print('falha');
-              return _showMyDialog(
+            }
+            if (success == false) {
+              return _showMyDialogFail(
                   'Compra não finalizada', 'Tente novamente mais tarde!');
             }
           },
@@ -174,6 +209,7 @@ class _NewCartPage extends State<CartPage> {
             Icons.attach_money,
           ),
           backgroundColor: Colors.green,
-        ));
+        ),
+    );
   }
 }
