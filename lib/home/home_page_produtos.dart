@@ -42,34 +42,62 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
     final Usuario usuario =
         ModalRoute.of(context).settings.arguments as Usuario;
 
+    Widget childFloatingButton = Container();
+
+    List<Widget> childrenListview = [
+      UserAccountsDrawerHeader(
+        accountName: Text('${usuario.firstName} ${usuario.lastName}',
+            style: TextStyle(fontSize: 25)),
+        accountEmail: Text('${usuario.email}'),
+        decoration: BoxDecoration(
+          color: Colors.green,
+        ),
+      ),
+    ];
+
+    if (usuario.isAdmin == true) {
+      childrenListview.add(ListTile(
+        leading: Icon(Icons.receipt),
+        title: Text('Minhas vendas', style: TextStyle()),
+        onTap: () {
+          Navigator.pushNamed(context, '/minhas_vendas', arguments: usuario);
+        },
+      ));
+
+      childFloatingButton = FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_produto', arguments: usuario);
+        },
+        label: Text("Adicionar produto"),
+        icon: Icon(
+          Icons.add,
+        ),
+        backgroundColor: Colors.green,
+      );
+    } else {
+      childrenListview.add(ListTile(
+        leading: Icon(Icons.receipt),
+        title: Text('Meus pedidos', style: TextStyle()),
+        onTap: () {
+          Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
+        },
+      ));
+    }
+
+    childrenListview.add(
+      ListTile(
+        leading: Icon(Icons.exit_to_app),
+        title: Text("Sair da conta"),
+        onTap: () {
+          Navigator.pushNamed(context, '/');
+        },
+      ),
+    );
+
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text('${usuario.firstName} ${usuario.lastName}',
-                  style: TextStyle(fontSize: 25)),
-              accountEmail: Text('${usuario.email}'),
-              decoration: BoxDecoration(
-                color: Colors.green,
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.receipt),
-              title: Text('Meus pedidos', style: TextStyle()),
-              onTap: () {
-                Navigator.pushNamed(context, '/meus_pedidos',
-                    arguments: usuario);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text("Sair da conta"),
-              onTap: () {
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-          ],
+          children: childrenListview,
         ),
       ),
       body: NestedScrollView(
@@ -85,8 +113,7 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
                     icon: Icon(Icons.shopping_cart),
                     color: Colors.white,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/cart',
-                          arguments: usuario.token);
+                      Navigator.pushNamed(context, '/cart', arguments: usuario);
                     },
                   ),
                 )
@@ -146,6 +173,9 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: Container(
+        child: childFloatingButton,
       ),
     );
   }
