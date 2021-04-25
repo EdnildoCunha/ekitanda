@@ -38,9 +38,14 @@ class CardPedidos extends StatelessWidget {
     List<Widget> children = [];
     children.add(Align(
       alignment: Alignment.topLeft,
-      child: Text('Pedido número: #${pedido['id']}',
-          style: TextStyle(
-              fontSize: 20, color: Colors.green, fontWeight: FontWeight.bold)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('Pedido número: #${pedido['id']}',
+            style: TextStyle(
+                fontSize: 20,
+                color: Colors.green,
+                fontWeight: FontWeight.bold)),
+      ),
     ));
 
     pedido['items'].forEach((item) {

@@ -29,16 +29,19 @@ class CardProdutoCart extends StatelessWidget {
               maxLines: 2,
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Text('Qtd ${produto['qty']}'),
-            SizedBox(width: 40),
-            Text(
-              "R\$ ${produto['price']},00 kg",
-              style:
-                  TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(width: 15),
-          ]),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Text('Qtd ${produto['qty']}'),
+              SizedBox(width: 40),
+              Text(
+                "R\$ ${produto['price']},00 kg",
+                style: TextStyle(
+                    color: Colors.black54, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 15),
+            ]),
+          ),
         ]),
       ),
     );
