@@ -43,19 +43,41 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
         ModalRoute.of(context).settings.arguments as Usuario;
 
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text('${usuario.firstName} ${usuario.lastName}',
+                  style: TextStyle(fontSize: 25)),
+              accountEmail: Text('${usuario.email}'),
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.receipt),
+              title: Text('Meus pedidos', style: TextStyle()),
+              onTap: () {
+                Navigator.pushNamed(context, '/meus_pedidos',
+                    arguments: usuario);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Sair da conta"),
+              onTap: () {
+                Navigator.pushNamed(context, '/');
+              },
+            ),
+          ],
+        ),
+      ),
       body: NestedScrollView(
         headerSliverBuilder: (context, condition) {
           return [
             SliverAppBar(
               backgroundColor: Colors.green,
               title: Text('e-Kitanda'),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
               actions: [
                 Padding(
                   padding: EdgeInsets.all(4.0),

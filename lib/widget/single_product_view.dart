@@ -48,32 +48,33 @@ class _SingleProductPage extends State<SingleProduct> {
     }
   }
 
-  Future<void> _showMyDialog(String title) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('$title'),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'OK',
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final List dados = ModalRoute.of(context).settings.arguments as List;
+
+    Future<void> _showMyDialog(String title) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('$title'),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'OK',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/meus_pedidos',
+                      arguments: dados[1]);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -92,13 +93,14 @@ class _SingleProductPage extends State<SingleProduct> {
             IconButton(
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
-                Navigator.pushNamed(context, '/cart', arguments: dados[1]);
+                Navigator.pushNamed(context, '/cart',
+                    arguments: dados[1].token);
               },
             ),
           ],
         ),
         body: FutureBuilder(
-          future: getProduto(dados[0], dados[1]),
+          future: getProduto(dados[0], dados[1].token),
           builder: (context, produto) {
             Widget child;
             if (produto.hasData) {
@@ -204,8 +206,10 @@ class _SingleProductPage extends State<SingleProduct> {
                                   padding: const EdgeInsets.all(6.0),
                                   child: IconButton(
                                     onPressed: () async {
-                                      await addToCart(produto.data.id,
-                                          int.parse(dropdownValue), dados[1]);
+                                      await addToCart(
+                                          produto.data.id,
+                                          int.parse(dropdownValue),
+                                          dados[1].token);
                                       if (success == true) {
                                         print('sucesso');
                                         return _showMyDialog(

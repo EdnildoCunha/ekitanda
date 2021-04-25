@@ -4,12 +4,12 @@ class CardProdutoCart extends StatelessWidget {
   final Map<String, dynamic> produto;
   final String token;
 
-  CardProdutoCart({this.produto, this.token});
+  CardProdutoCart({@required this.produto, @required this.token});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         shadowColor: Colors.green,
         elevation: 2.0,
@@ -33,22 +33,11 @@ class CardProdutoCart extends StatelessWidget {
             Text('Qtd ${produto['qty']}'),
             SizedBox(width: 40),
             Text(
-              "R\$ ${produto['price']} kg",
+              "R\$ ${produto['price']},00 kg",
               style:
                   TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 20),
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: TextButton(
-                  onPressed: () {
-                    print('removido');
-                  },
-                  child: Text(
-                    "Remover",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-            ),
+            SizedBox(width: 15),
           ]),
         ]),
       ),

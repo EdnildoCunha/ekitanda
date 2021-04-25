@@ -11,7 +11,7 @@ class CardProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         shadowColor: Colors.green,
         elevation: 2.0,
@@ -33,21 +33,22 @@ class CardProduto extends StatelessWidget {
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             Text(
-              "R\$ ${produto.price} kg",
-              style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+              "R\$ ${produto.price},00 kg",
+              style:
+                  TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
             ),
             SizedBox(width: 20),
             Padding(
               padding: const EdgeInsets.all(6.0),
               child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/single_product', arguments: [produto.id, usuario.token]);
-                },
-                child: Text(
-                  "Ver mais",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/single_product',
+                        arguments: [produto.id, usuario]);
+                  },
+                  child: Text(
+                    "Ver mais",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
             ),
           ]),
         ]),
