@@ -17,7 +17,10 @@ class CardProdutoGeral extends StatelessWidget {
         color: Colors.green[50],
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           ListTile(
-            leading: Image.network('${produto['image']}'),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network('${produto['image']}'),
+            ),
             title: Text(
               produto['title'],
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),

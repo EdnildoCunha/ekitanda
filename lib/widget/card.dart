@@ -119,7 +119,10 @@ class CardProduto extends StatelessWidget {
             children: childrenRowTop,
           ),
           ListTile(
-            leading: Image.network(produto.imageUrl),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(produto.imageUrl),
+            ),
             title: Text(
               produto.title,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
