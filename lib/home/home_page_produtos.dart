@@ -115,6 +115,9 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
         headerSliverBuilder: (context, condition) {
           return [
             SliverAppBar(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))
+              ),
               backgroundColor: Colors.green,
               title: Text('e-Kitanda'),
               actions: actions,
@@ -124,9 +127,16 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
               expandedHeight: 200.0,
               flexibleSpace: FlexibleSpaceBar(
                 //title: Text('e-Kitanda'),
-                background: Image.asset(
-                  'assets/image_sliver.png',
-                  fit: BoxFit.fill,
+                background: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    boxShadow: [BoxShadow(blurRadius: 3.0)],
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(30)),
+                  ),
+                  child: Image.asset(
+                    'assets/image_sliver.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             )
@@ -138,12 +148,12 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 2, left: 10),
                   child: Text(
                     'Todos os produtos',
                     style: TextStyle(
                         color: Colors.green,
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold),
                   ),
                 ),

@@ -30,6 +30,8 @@ class _NewCartPage extends State<CartPage> {
         ModalRoute.of(context).settings.arguments as Usuario;
     final String token = usuario.token;
 
+    Widget child;
+
     Future<void> _showMyDialog(String title, String content) async {
       return showDialog<void>(
         context: context,
@@ -101,8 +103,6 @@ class _NewCartPage extends State<CartPage> {
 
         total = produto["data"]['cartItem']['totalAmount'];
 
-        print('${produto["data"]['cartItem']['totalAmount']}');
-
         (produto["data"]['cartItem']['items'] as List).forEach((p) {
           produtos.add(p);
         });
@@ -137,20 +137,7 @@ class _NewCartPage extends State<CartPage> {
                   'Todos os produtos',
                   style: TextStyle(
                       color: Colors.green,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Total: R\$ $total,00',
-                  style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -162,9 +149,12 @@ class _NewCartPage extends State<CartPage> {
                 if (listaProdutos.hasData) {
                   if (listaProdutos.data.length < 1) {
                     children.add(Center(
-                      child: Text(
-                        "Ainda não há itens no carrinho",
-                        style: TextStyle(fontSize: 20),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Ainda não há itens no carrinho",
+                          style: TextStyle(fontSize: 20),
+                        ),
                       ),
                     ));
                   } else {
@@ -174,6 +164,19 @@ class _NewCartPage extends State<CartPage> {
                         usuario: usuario,
                       ));
                     });
+                    children.add(Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10, left: 20, bottom: 70),
+                        child: Text(
+                          'Total: R\$ $total,00',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ));
                   }
                 } else {
                   children.add(Center(
@@ -184,8 +187,17 @@ class _NewCartPage extends State<CartPage> {
                   ));
                 }
 
-                return Column(
-                  children: children,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 20,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: children,
+                    ),
+                  ),
                 );
               },
             ),

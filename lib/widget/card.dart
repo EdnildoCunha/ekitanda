@@ -67,7 +67,7 @@ class CardProduto extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           "R\$ ${produto.price},00",
-          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
       SizedBox(width: 20),
@@ -102,7 +102,7 @@ class CardProduto extends StatelessWidget {
               },
               child: Text(
                 "Ver mais",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               )),
         ),
       );
@@ -111,21 +111,27 @@ class CardProduto extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        shadowColor: Colors.green,
-        elevation: 2.0,
-        color: Colors.green[50],
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        shadowColor: Colors.black54,
+        elevation: 10.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        color: Colors.green[20],
+        child: Column(mainAxisAlignment: MainAxisAlignment.start,
+         children: [
           Row(
             children: childrenRowTop,
           ),
           ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.network(produto.imageUrl),
+            leading: Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10)),
+                child: Image.network(produto.imageUrl, fit: BoxFit.fill,)
+              ),
             ),
             title: Text(
               produto.title,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
@@ -133,6 +139,10 @@ class CardProduto extends StatelessWidget {
               produto.description,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black54,
+              ),
             ),
           ),
           Row(

@@ -51,12 +51,15 @@ class _NewPageMeusPedidos extends State<MeusPedidos> {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                  left: 10,
+                ),
                 child: Text(
                   'Todos os pedidos',
                   style: TextStyle(
                       color: Colors.green,
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold),
                 ),
               ),

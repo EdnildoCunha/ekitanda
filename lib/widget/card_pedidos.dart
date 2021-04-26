@@ -81,14 +81,28 @@ class CardPedidos extends StatelessWidget {
       ));
     });
 
+    Color cor;
+    String text;
+    if (pedido['status'] == 'cancelled') {
+      cor = Colors.red;
+      text = 'Cancelado';
+    } else if (pedido['status'] == 'completed') {
+      cor = Colors.green;
+      text = 'Completo';
+    } else {
+      cor = Colors.black;
+      text = 'Pendente';
+    }
+
     children.add(Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Text(
-            '${pedido['status']}',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            '$text',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: cor),
           ),
         ),
         Padding(
@@ -145,7 +159,10 @@ class CardPedidos extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Card(
         shadowColor: Colors.green,
-        elevation: 2.0,
+        elevation: 10.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -104,27 +104,37 @@ class _SingleProductPage extends State<SingleProduct> {
               child = Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Card(
+                  shadowColor: Colors.black54,
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: SingleChildScrollView(
                     child: Column(children: [
                       Container(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.network(
-                          '${produto.data.imageUrl}',
-                          height: 300,
-                        ),
-                      )),
+                        width: MediaQuery.of(context).size.width,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                          child: Image.network(
+                            '${produto.data.imageUrl}',
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      ),
                       Container(
-                          child: Column(
+                        child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              '${produto.data.title}',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+                              child: Text(
+                                '${produto.data.title}',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green),
+                              ),
                             ),
                           ),
                           Padding(
@@ -133,7 +143,7 @@ class _SingleProductPage extends State<SingleProduct> {
                               child: Text(
                                 '${produto.data.description}',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   color: Colors.black54,
                                 ),
                                 textAlign: TextAlign.justify,
@@ -148,18 +158,30 @@ class _SingleProductPage extends State<SingleProduct> {
                                   child: Text(
                                     "R\$ ${produto.data.price},00",
                                     style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 25,
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 SizedBox(width: 15),
-                              ]),
+                              ]
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.green[200]
+                                )
+                              ),
+                            ),
+                          ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  'qtd',
+                                  'quantidade',
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 SizedBox(width: 20),
@@ -219,7 +241,7 @@ class _SingleProductPage extends State<SingleProduct> {
                                     },
                                     icon: Icon(
                                       Icons.add_shopping_cart_outlined,
-                                      color: Colors.green,
+                                      color: Colors.blue,
                                       size: 35,
                                     ),
                                   ),

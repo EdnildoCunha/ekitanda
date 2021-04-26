@@ -1,16 +1,7 @@
 # ekitanda
 
-A new Flutter project.
+Projeto de um aplicativo de e-commerce para a disciplina de TÓPICOS EM ENGENHARIA DA COMPUTAÇÃO II - DESENVOLVIMENTO DE APLICAÇÕES MÓVEIS
 
-## Getting Started
+## Dupla: Ednildo Cunha Almeida e Hilton Oliveira Segundo
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
