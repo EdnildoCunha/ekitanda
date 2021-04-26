@@ -146,7 +146,7 @@ class _SingleProductPage extends State<SingleProduct> {
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    "R\$ ${produto.data.price},00 kg",
+                                    "R\$ ${produto.data.price},00",
                                     style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.black54,

@@ -26,7 +26,8 @@ class _NewCartPage extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Usuario usuario = ModalRoute.of(context).settings.arguments as Usuario;
+    final Usuario usuario =
+        ModalRoute.of(context).settings.arguments as Usuario;
     final String token = usuario.token;
 
     Future<void> _showMyDialog(String title, String content) async {
@@ -50,7 +51,8 @@ class _NewCartPage extends State<CartPage> {
                   style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
+                  Navigator.pushNamed(context, '/meus_pedidos',
+                      arguments: usuario);
                 },
               ),
             ],
@@ -111,23 +113,25 @@ class _NewCartPage extends State<CartPage> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          leading: Padding(
-            padding: EdgeInsets.all(4.0),
-            child: IconButton(
-              icon: Icon(Icons.arrow_back),
-              color: Colors.white,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        leading: Padding(
+          padding: EdgeInsets.all(4.0),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pushNamed(context, '/produtos', arguments: usuario);
+            },
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   'Todos os produtos',
@@ -137,79 +141,81 @@ class _NewCartPage extends State<CartPage> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              FutureBuilder(
-                future: getProdutosCart(token),
-                builder: (context, listaProdutos) {
-                  List<Widget> children = [];
-                  if (listaProdutos.hasData) {
-                    if (listaProdutos.data.length < 1) {
-                      children.add(Center(
-                        child: Text(
-                          "Ainda não há itens no carrinho",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ));
-                    } else {
-                      listaProdutos.data.forEach((item) {
-                        children.add(CardProdutoCart(
-                          produto: item,
-                          token: token,
-                        ));
-                      });
-                    }
-                    children.add(Container(
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          'Total: R\$ $total,00',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Total: R\$ $total,00',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            FutureBuilder(
+              future: getProdutosCart(token),
+              builder: (context, listaProdutos) {
+                List<Widget> children = [];
+                if (listaProdutos.hasData) {
+                  if (listaProdutos.data.length < 1) {
+                    children.add(Center(
+                      child: Text(
+                        "Ainda não há itens no carrinho",
+                        style: TextStyle(fontSize: 20),
                       ),
                     ));
                   } else {
-                    children.add(Padding(
+                    listaProdutos.data.forEach((item) {
+                      children.add(CardProdutoCart(
+                        produto: item,
+                        usuario: usuario,
+                      ));
+                    });
+                  }
+                } else {
+                  children.add(Center(
+                    child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: CircularProgressIndicator(),
-                    ));
-                  }
+                    ),
+                  ));
+                }
 
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: children,
-                  );
-                },
-              ),
-            ],
-          ),
+                return Column(
+                  children: children,
+                );
+              },
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            if (total > 0){
-              await finalizarCompra(token);
-            }
-            if (total <= 0){
-              return _showMyDialogFail(
-                  'O carrinho não possui itens!', 'Adicione itens e tente novamente!');
-            }
-            if (success == true) {
-              return _showMyDialog('Compra finalizada',
-                  'Acesse o menu de compras para finalizar o pagamento');
-            }
-            if (success == false) {
-              return _showMyDialogFail(
-                  'Compra não finalizada', 'Tente novamente mais tarde!');
-            }
-          },
-          label: Text("Finalizar compra"),
-          icon: Icon(
-            Icons.attach_money,
-          ),
-          backgroundColor: Colors.green,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          if (total > 0) {
+            await finalizarCompra(token);
+          }
+          if (total <= 0) {
+            return _showMyDialogFail('O carrinho não possui itens!',
+                'Adicione itens e tente novamente!');
+          }
+          if (success == true) {
+            return _showMyDialog('Compra finalizada',
+                'Acesse o menu de compras para finalizar o pagamento');
+          }
+          if (success == false) {
+            return _showMyDialogFail(
+                'Compra não finalizada', 'Tente novamente mais tarde!');
+          }
+        },
+        label: Text("Finalizar compra"),
+        icon: Icon(
+          Icons.attach_money,
         ),
+        backgroundColor: Colors.green,
+      ),
     );
   }
 }

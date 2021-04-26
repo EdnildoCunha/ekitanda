@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ekitanda/model/usuario.dart';
 import 'package:ekitanda/widget/card_cart.dart';
+import 'package:ekitanda/widget/card_produtos.dart';
 import 'package:flutter/material.dart';
 
 class CardPedidos extends StatelessWidget {
@@ -36,6 +37,31 @@ class CardPedidos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
+
+    Future<void> _showMyDialog(String title) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('$title'),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'OK',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/meus_pedidos',
+                      arguments: usuario);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     children.add(Align(
       alignment: Alignment.topLeft,
       child: Padding(
@@ -49,7 +75,7 @@ class CardPedidos extends StatelessWidget {
     ));
 
     pedido['items'].forEach((item) {
-      children.add(CardProdutoCart(
+      children.add(CardProdutoGeral(
         produto: item,
         token: usuario.token,
       ));
@@ -89,8 +115,7 @@ class CardPedidos extends StatelessWidget {
             onPressed: () async {
               await cancelarPedido(pedido['id'], usuario.token);
               if (successCancel) {
-                Navigator.pushNamed(context, '/meus_pedidos',
-                    arguments: usuario);
+                _showMyDialog('Compra cancelada com sucesso');
               }
             },
           ),
@@ -108,8 +133,7 @@ class CardPedidos extends StatelessWidget {
             onPressed: () async {
               await pagarPedido(pedido['id'], usuario.token);
               if (successPay) {
-                Navigator.pushNamed(context, '/meus_pedidos',
-                    arguments: usuario);
+                _showMyDialog('Pagamento efetuado com sucesso');
               }
             },
           ),

@@ -43,7 +43,7 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
         ModalRoute.of(context).settings.arguments as Usuario;
 
     Widget childFloatingButton = Container();
-
+    List<Widget> actions = [];
     List<Widget> childrenListview = [
       UserAccountsDrawerHeader(
         accountName: Text('${usuario.firstName} ${usuario.lastName}',
@@ -82,6 +82,17 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
           Navigator.pushNamed(context, '/meus_pedidos', arguments: usuario);
         },
       ));
+
+      actions.add(Padding(
+        padding: EdgeInsets.all(4.0),
+        child: IconButton(
+          icon: Icon(Icons.shopping_cart),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/cart', arguments: usuario);
+          },
+        ),
+      ));
     }
 
     childrenListview.add(
@@ -106,18 +117,7 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
             SliverAppBar(
               backgroundColor: Colors.green,
               title: Text('e-Kitanda'),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: IconButton(
-                    icon: Icon(Icons.shopping_cart),
-                    color: Colors.white,
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/cart', arguments: usuario);
-                    },
-                  ),
-                )
-              ],
+              actions: actions,
               pinned: true,
               floating: true,
               snap: false,
@@ -135,14 +135,17 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'Todos os produtos',
-                  style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Todos os produtos',
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               FutureBuilder(
@@ -157,15 +160,12 @@ class _NewHomePageProdutos extends State<HomePageProdutos> {
                       ));
                     });
                   } else {
-                    children.add(Padding(
-                      padding: const EdgeInsets.all(20.0),
+                    children.add(Center(
                       child: CircularProgressIndicator(),
                     ));
                   }
 
                   return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: children,
                   );
                 },

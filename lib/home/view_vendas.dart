@@ -18,7 +18,7 @@ class _NewPageMinhasVendas extends State<MinhasVendas> {
       List pedidos = [];
       try {
         var response = await Dio().get(
-            'https://restful-ecommerce-ufma.herokuapp.com/api/v1/orders/all',
+            'https://restful-ecommerce-ufma.herokuapp.com/api/v1/orders/all/completed',
             options: Options(headers: {"Authorization": 'Bearer $token'}));
         var resposta = response.data;
 

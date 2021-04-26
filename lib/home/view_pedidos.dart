@@ -48,20 +48,26 @@ class _NewPageMeusPedidos extends State<MeusPedidos> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Todos os pedidos',
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Todos os pedidos',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             FutureBuilder(
               future: getPedidos(usuario.token),
               builder: (context, listaPedidos) {
                 List<Widget> children = [];
+                List<Widget> childrenCompleted = [];
+                List<Widget> childrenCancelled = [];
+
                 if (listaPedidos.hasData) {
                   if (listaPedidos.data.length < 1) {
                     children.add(Center(
@@ -72,10 +78,31 @@ class _NewPageMeusPedidos extends State<MeusPedidos> {
                     ));
                   } else {
                     listaPedidos.data.forEach((item) {
-                      children.add(CardPedidos(
-                        pedido: item,
-                        usuario: usuario,
-                      ));
+                      if (item['status'] == 'pending') {
+                        children.add(CardPedidos(
+                          pedido: item,
+                          usuario: usuario,
+                        ));
+                      }
+                      if (item['status'] == 'completed') {
+                        childrenCompleted.add(CardPedidos(
+                          pedido: item,
+                          usuario: usuario,
+                        ));
+                      }
+                      if (item['status'] == 'cancelled') {
+                        childrenCancelled.add(CardPedidos(
+                          pedido: item,
+                          usuario: usuario,
+                        ));
+                      }
+                    });
+
+                    childrenCompleted.forEach((widget) {
+                      children.add(widget);
+                    });
+                    childrenCancelled.forEach((widget) {
+                      children.add(widget);
                     });
                   }
                 } else {
@@ -88,8 +115,6 @@ class _NewPageMeusPedidos extends State<MeusPedidos> {
                 }
 
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: children,
                 );
               },

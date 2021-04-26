@@ -21,12 +21,52 @@ class CardProduto extends StatelessWidget {
       }
     }
 
+    Future<void> _showMyDialog(String title, String content) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('$title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('$content'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'CONFIRMAR',
+                  style: TextStyle(fontSize: 20, color: Colors.green),
+                ),
+                onPressed: () async {
+                  await removerProduto(usuario.token, '${produto.id}');
+                  Navigator.pushNamed(context, '/produtos', arguments: usuario);
+                },
+              ),
+              TextButton(
+                child: Text(
+                  'CANCELAR',
+                  style: TextStyle(fontSize: 20, color: Colors.red),
+                ),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     List<Widget> childrenRowTop = [Container()];
     List<Widget> childrenRowBottom = [
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
-          "R\$ ${produto.price},00 kg",
+          "R\$ ${produto.price},00",
           style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
         ),
       ),
@@ -39,8 +79,8 @@ class CardProduto extends StatelessWidget {
           padding: const EdgeInsets.all(6.0),
           child: TextButton(
               onPressed: () async {
-                await removerProduto(usuario.token, '${produto.id}');
-                Navigator.pushNamed(context, '/produtos', arguments: usuario);
+                _showMyDialog('Você tem certeza que quer remover este produto?',
+                    'Aperte em confirmar para continuar com a remoção');
               },
               child: Text(
                 "Remover produto",
@@ -74,31 +114,29 @@ class CardProduto extends StatelessWidget {
         shadowColor: Colors.green,
         elevation: 2.0,
         color: Colors.green[50],
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, 
-          children: [
-            Row(
-              children: childrenRowTop,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Row(
+            children: childrenRowTop,
+          ),
+          ListTile(
+            leading: Image.network(produto.imageUrl),
+            title: Text(
+              produto.title,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-            ListTile(
-              leading: Image.network(produto.imageUrl),
-              title: Text(
-                produto.title,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              subtitle: Text(
-                produto.description,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-              ),
+            subtitle: Text(
+              produto.description,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: childrenRowBottom,
-            ),
-          ]
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: childrenRowBottom,
+          ),
+        ]),
       ),
     );
   }

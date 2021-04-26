@@ -16,14 +16,10 @@ class _NewLogin extends State<Login> {
   Map<String, dynamic> login;
 
   Future<void> postLogin(String email, String password) async {
-    try {
-      var response = await Dio().post(
-          'https://restful-ecommerce-ufma.herokuapp.com/login',
-          data: {'email': email, 'password': password});
-      login = response.data;
-    } catch (e) {
-      print(e);
-    }
+    var response = await Dio().post(
+        'https://restful-ecommerce-ufma.herokuapp.com/login',
+        data: {'email': email, 'password': password});
+    login = response.data;
   }
 
   @override

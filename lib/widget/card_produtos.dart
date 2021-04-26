@@ -1,22 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:ekitanda/model/usuario.dart';
 import 'package:flutter/material.dart';
 
-class CardProdutoCart extends StatelessWidget {
+class CardProdutoGeral extends StatelessWidget {
   final Map<String, dynamic> produto;
-  final Usuario usuario;
+  final String token;
 
-  CardProdutoCart({@required this.produto, @required this.usuario});
+  CardProdutoGeral({@required this.produto, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    Future<void> deleteProduct(int id, String token) async {
-      var response = await Dio().post(
-          'https://restful-ecommerce-ufma.herokuapp.com/api/v1/cart/remove/$id',
-          options: Options(headers: {"Authorization": 'Bearer $token'}));
-      Navigator.pushNamed(context, '/cart', arguments: usuario);
-    }
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -40,21 +32,9 @@ class CardProdutoCart extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  onPressed: () async {
-                    await deleteProduct(produto['id'], usuario.token);
-                  },
-                ),
-              ),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               Text('Qtd ${produto['qty']}'),
-              SizedBox(width: 20),
+              SizedBox(width: 40),
               Text(
                 "R\$ ${produto['price']},00",
                 style: TextStyle(
